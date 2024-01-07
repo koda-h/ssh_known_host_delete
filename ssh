@@ -1,0 +1,17 @@
+#!/bin/bash
+
+TMP_FILE=$(mktemp)
+
+/usr/bin/ssh $* 2> $TMP_FILE
+RET=$?
+
+if [ "$RET" = "255" ]; then
+  DELETE_HOST=$(grep "Host key for" $TMP_FILE |awk '{print $4}')
+  if [ -n "$DELETE_HOST" ]; then
+    echo "REMOTE HOST IDENTIFICATION HAS CHANGED! DELETE HOST KEY FROM ~/.ssh/known_hosts"
+    ssh-keygen -R $DELETE_HOST
+    /usr/bin/ssh $*
+  fi
+fi
+
+rm $TMP_FILE
