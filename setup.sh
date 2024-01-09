@@ -23,6 +23,6 @@ if [ "$RET" = "1" ]; then
     RC_FILE=.bashrc
   fi
   echo "set PATH"
-  echo 'export PATH="$HOME/bin:$PATH"' >> $HOME/.zshrc
+  echo 'export PATH="$HOME/bin:$PATH"' >> $HOME/$RC_FILE
 fi
 
